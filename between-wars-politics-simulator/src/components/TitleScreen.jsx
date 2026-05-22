@@ -16,6 +16,9 @@ export default function TitleScreen({ onStart }) {
           <span className="flag-chip flag-germany">DE</span>
           <span className="flag-chip flag-italy">IT</span>
           <span className="flag-chip flag-ussr">USSR</span>
+          <span className="flag-chip flag-poland">PL</span>
+          <span className="flag-chip flag-czechoslovakia">CZ</span>
+          <span className="flag-chip flag-yishuv">YSH</span>
         </div>
         <button className="big-button" onClick={onStart}>
           Begin

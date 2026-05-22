@@ -183,6 +183,18 @@
   background: #9b1a1a;
   color: #f2cb31;
 }
+.flag-chip.flag-poland {
+  background: #b91c1c;
+  color: #f1e7c8;
+}
+.flag-chip.flag-czechoslovakia {
+  background: #11457e;
+  color: #f1e7c8;
+}
+.flag-chip.flag-yishuv {
+  background: #0d3b5e;
+  color: #f1e7c8;
+}
 
 .title-frame .big-button {
   display: block;

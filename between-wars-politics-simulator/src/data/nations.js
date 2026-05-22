@@ -130,6 +130,84 @@ export const nations = {
       'Modernize Italian industry without bankrupting the regime.',
     ],
   },
+  poland: {
+    id: 'poland',
+    name: 'Second Polish Republic',
+    leader: 'Marshal',
+    tagline: 'Between Two Empires',
+    description:
+      'It is 1933. Poland has been independent for fifteen years, wrenched back into being after 123 years of partition. Marshal Piłsudski rules from behind the scenes. The economy is fragile, the eastern minorities restive, and your two neighbors — Germany and the USSR — have been your enemies for centuries. Poland must learn, again, to survive between them.',
+    colors: {
+      primary: '#b91c1c',
+      accent: '#3a3a3a',
+      paper: '#f1e7c8',
+      ink: '#1a0808',
+    },
+    startingStats: {
+      military: 45,
+      economy: 35,
+      diplomacy: 40,
+      stability: 55,
+      aggression: 5,
+    },
+    objectives: [
+      'Preserve Polish independence against revisionist pressure from Berlin and Moscow.',
+      'Defend the frontiers settled at Versailles — Danzig, the Corridor, the Eastern Borderlands.',
+      'Modernize the economy and the army before the next European war begins.',
+    ],
+  },
+  czechoslovakia: {
+    id: 'czechoslovakia',
+    name: 'Czechoslovakia',
+    leader: 'President',
+    tagline: 'The Last Democracy in Central Europe',
+    description:
+      'It is 1933. Masaryk’s Czechoslovakia is the most successful state to emerge from the wreckage of the Habsburg Empire — democratic, industrial, allied to France, ringed by mountains, with an army the General Staff in Paris respects. But you contain three million Sudeten Germans, a million Hungarians, a restless Slovakia. Across the western mountains, a new Chancellor speaks of all Germans living under one Reich.',
+    colors: {
+      primary: '#11457e',
+      accent: '#8b1538',
+      paper: '#f1e7c8',
+      ink: '#0a1a30',
+    },
+    startingStats: {
+      military: 60,
+      economy: 65,
+      diplomacy: 70,
+      stability: 55,
+      aggression: 0,
+    },
+    objectives: [
+      'Preserve Czechoslovak democracy and territorial integrity.',
+      'Hold the alliance system: France, the Little Entente, and the USSR.',
+      'Manage the Sudeten German question without conceding the frontier fortresses.',
+    ],
+  },
+  yishuv: {
+    id: 'yishuv',
+    name: 'The Yishuv',
+    leader: 'Chairman of the Jewish Agency',
+    tagline: 'A Nation in Becoming',
+    description:
+      'It is 1933. Two hundred thousand Jews live in British Mandate Palestine — kibbutzim along the Jordan, neighborhoods rising on the Tel Aviv dunes, a network of trade unions and schools and self-defense groups. Berlin’s new Chancellor has just begun a campaign of persecution that will soon make Palestine the only door left open to European Jewry. The Mandate authorities are nervous; the Arab majority is angry; the Jewish Agency must choose how a stateless nation builds itself.',
+    colors: {
+      primary: '#0d3b5e',
+      accent: '#8a5a14',
+      paper: '#f1e7c8',
+      ink: '#0a1c2f',
+    },
+    startingStats: {
+      military: 20,
+      economy: 35,
+      diplomacy: 30,
+      stability: 50,
+      aggression: 0,
+    },
+    objectives: [
+      'Open the gates of Palestine to Jewish refugees from Europe.',
+      'Build the institutional and economic foundations of a future Jewish state.',
+      'Defend the Yishuv from violence while preserving relations with Britain and the Arab population.',
+    ],
+  },
   ussr: {
     id: 'ussr',
     name: 'Soviet Union',
@@ -158,7 +236,17 @@ export const nations = {
   },
 }
 
-export const nationOrder = ['us', 'britain', 'france', 'germany', 'italy', 'ussr']
+export const nationOrder = [
+  'us',
+  'britain',
+  'france',
+  'germany',
+  'italy',
+  'ussr',
+  'poland',
+  'czechoslovakia',
+  'yishuv',
+]
 
 export const statLabels = {
   military: 'Military',

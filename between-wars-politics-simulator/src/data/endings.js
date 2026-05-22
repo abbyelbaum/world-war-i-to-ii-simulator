@@ -263,6 +263,84 @@ const HISTORICAL = {
       blurb: 'A cautious, liberal Italy. The Fascist costume kept; the Fascist program quietly abandoned.',
     },
   ],
+  poland: [
+    {
+      id: 'beck',
+      name: 'Józef Beck',
+      test: (s, flags) => flags.has('polish-defiance') || flags.has('cieszyn-taken'),
+      blurb: 'Foreign minister of a thousand calculations — pact with Hitler, grab at Czech corpse, defiance over Danzig. The real Beck, to the last.',
+    },
+    {
+      id: 'rydz',
+      name: 'Marshal Rydz-Śmigły',
+      test: (s) => s.military >= 60,
+      blurb: 'You built the army Piłsudski had only sketched. The September campaign was bloody, but no one will say Poland did not fight.',
+    },
+    {
+      id: 'sikorski',
+      name: 'A Sikorski opposition that came to power',
+      test: (s, flags) => flags.has('polish-democracy') || flags.has('polish-soviet-attempt'),
+      blurb: 'A liberal Poland, allied to both West and East, that opted out of the Colonels’ politics. A road not taken, but it existed.',
+    },
+    {
+      id: 'pilsudski',
+      name: 'Piłsudski in spirit',
+      test: (s, flags) => flags.has('polish-balance'),
+      blurb: 'Balance between the two giants — neither pact nor alliance, neither East nor West. The Marshal’s old maxim, kept.',
+    },
+  ],
+  czechoslovakia: [
+    {
+      id: 'benes',
+      name: 'Edvard Beneš',
+      test: (s, flags) => flags.has('benes-president') && (flags.has('czech-soviet-treaty') || flags.has('munich-accepted')),
+      blurb: 'The diplomat to the end — Geneva, Paris, Moscow, finally London. You believed treaties would hold, and they did not.',
+    },
+    {
+      id: 'hacha',
+      name: 'Emil Hácha',
+      test: (s, flags) => flags.has('protectorate'),
+      blurb: 'The collapse in Berlin, the protectorate signed. A figurehead presidency over a vanished state.',
+    },
+    {
+      id: 'masaryk',
+      name: 'A Masaryk still alive',
+      test: (s, flags) => !flags.has('munich-accepted') && !flags.has('protectorate') && s.stability >= 50,
+      blurb: 'The Republic held, somehow. The father of Czechoslovakia would not have recognized your tactics, but he would have approved the result.',
+    },
+    {
+      id: 'czech-fighter',
+      name: 'The Republic that fought',
+      test: (s, flags) => flags.has('czech-resists') || flags.has('czech-fought'),
+      blurb: 'You refused to be carved up bloodlessly. Prague fell, but with a rifle in its hand.',
+    },
+  ],
+  yishuv: [
+    {
+      id: 'ben-gurion',
+      name: 'David Ben-Gurion',
+      test: (s, flags) => flags.has('ben-gurion-formula') || (flags.has('accepted-partition') && flags.has('havlagah')),
+      blurb: 'Pragmatic, ruthless, patient: accept what is offered, prepare for what must be taken, organize the state every day from before it exists.',
+    },
+    {
+      id: 'jabotinsky',
+      name: 'Vladimir Jabotinsky',
+      test: (s, flags) => flags.has('irgun-active') || flags.has('british-revolt') || flags.has('rejected-partition'),
+      blurb: 'Iron wall, maximal borders, armed resistance. The revisionist line — and you led the Yishuv along it.',
+    },
+    {
+      id: 'weizmann',
+      name: 'Chaim Weizmann',
+      test: (s, flags) => flags.has('british-cooperation') && s.diplomacy >= 50,
+      blurb: 'The London diplomat. Persuasion over force, careful relations with the British. Patient incrementalism.',
+    },
+    {
+      id: 'katznelson',
+      name: 'Berl Katznelson',
+      test: (s, flags) => flags.has('pioneer-priority') || flags.has('settlement-push'),
+      blurb: 'The labor Zionist soul. The kibbutz, the moshav, the union, the school — the state grown from the soil up.',
+    },
+  ],
   ussr: [
     {
       id: 'stalin',
@@ -388,6 +466,67 @@ const OBJECTIVES = {
     {
       label: 'Modernize without bankrupting the regime',
       score: (s) => (s.economy >= 45 && s.stability >= 45 ? 2 : s.economy >= 30 ? 1 : 0),
+    },
+  ],
+  poland: [
+    {
+      label: 'Preserve Polish independence',
+      score: (s, f) =>
+        !f.has('wwii') ? 2 :
+        f.has('romanian-bridgehead') ? 1 :
+        f.has('poland-fights') ? 1 : 0,
+    },
+    {
+      label: 'Defend the frontiers settled at Versailles',
+      score: (s, f) =>
+        f.has('polish-defiance') && !f.has('polish-concession') ? 2 :
+        f.has('polish-concession') ? 0 :
+        1,
+    },
+    {
+      label: 'Modernize the economy and the army',
+      score: (s) => (s.economy >= 50 && s.military >= 55 ? 2 : s.military >= 50 || s.economy >= 45 ? 1 : 0),
+    },
+  ],
+  czechoslovakia: [
+    {
+      label: 'Preserve democratic Czechoslovakia',
+      score: (s, f) =>
+        !f.has('protectorate') && !f.has('munich-accepted') && s.stability >= 50 ? 2 :
+        !f.has('protectorate') ? 1 : 0,
+    },
+    {
+      label: 'Hold the alliance system',
+      score: (s, f) =>
+        (f.has('czech-soviet-treaty') ? 1 : 0) +
+        (s.diplomacy >= 55 ? 1 : 0),
+    },
+    {
+      label: 'Manage the Sudeten question without losing the frontier',
+      score: (s, f) =>
+        f.has('sudeten-concessions') && !f.has('munich') ? 2 :
+        f.has('czech-firm') || f.has('czech-mobilized') ? 1 :
+        0,
+    },
+  ],
+  yishuv: [
+    {
+      label: 'Open the gates to refugees',
+      score: (s, f) =>
+        (f.has('emergency-aliyah') || f.has('aliyah-bet') || f.has('aliyah-bet-expanded') || f.has('aliyah-bet-massive') || f.has('vienna-rescue') || f.has('rescue-priority') || f.has('haavara') ? 1 : 0) +
+        (f.has('ben-gurion-formula') || f.has('rescue-priority') || f.has('aliyah-bet-massive') ? 1 : 0),
+    },
+    {
+      label: 'Build the foundations of a future state',
+      score: (s, f) =>
+        (s.economy >= 50 ? 1 : 0) +
+        (f.has('settlement-push') || f.has('hidden-army') || f.has('state-building') ? 1 : 0),
+    },
+    {
+      label: 'Defend the Yishuv while preserving relations',
+      score: (s, f) =>
+        f.has('havlagah') && (s.military >= 35 || f.has('british-cooperation')) ? 2 :
+        f.has('british-cooperation') || s.military >= 40 ? 1 : 0,
     },
   ],
   ussr: [

@@ -63,6 +63,30 @@ export const events = [
           { label: 'Fortress socialism — trust no capitalist', outcome: 'Litvinov is sidelined; the Comintern radicalizes.', effects: { military: +5, diplomacy: -8, aggression: +5 }, tension: +1, flags: ['fortress-socialism'] },
         ],
       },
+      poland: {
+        description: 'Hitler is Chancellor. A new chapter for a 200-year-old problem with your western neighbor.',
+        choices: [
+          { label: 'Press France to confront Berlin now', outcome: 'Paris is uninterested; you make the case anyway.', effects: { diplomacy: +5, aggression: +5 }, tension: 0 },
+          { label: 'Sound out Berlin for a settlement', outcome: 'Quiet talks begin; Hitler is unexpectedly receptive.', effects: { diplomacy: +5 }, tension: -1 },
+          { label: 'Accelerate the army modernization', outcome: 'Beck orders the General Staff to plan for a two-front war.', effects: { military: +8, economy: -3 }, tension: 0 },
+        ],
+      },
+      czechoslovakia: {
+        description: 'Hitler is Chancellor. Three million Sudeten Germans inside your borders watch Berlin closely.',
+        choices: [
+          { label: 'Reinforce the French alliance', outcome: 'Beneš travels to Paris; Laval is reassuring but vague.', effects: { diplomacy: +8 }, tension: 0 },
+          { label: 'Begin fortifying the German frontier', outcome: 'Concrete pours along the Bohemian mountains; the Sudetenland watches.', effects: { military: +10, economy: -5 }, tension: 0, flags: ['czech-fortifications'] },
+          { label: 'Open quiet talks with Berlin', outcome: 'A correct diplomatic minimum; the press at home is uneasy.', effects: { diplomacy: +3 }, tension: 0 },
+        ],
+      },
+      yishuv: {
+        description: 'Hitler is Chancellor. Reports reach Tel Aviv of Jewish lawyers struck off the rolls, synagogues defaced, the first arrests. The Jewish Agency must prepare.',
+        choices: [
+          { label: 'Open an emergency immigration office in Berlin', outcome: 'A pipeline begins; the Mandate quietly assists.', effects: { economy: +5, stability: +5, diplomacy: +3 }, tension: 0, flags: ['emergency-aliyah'] },
+          { label: 'Lead the worldwide Jewish boycott of Germany', outcome: 'The Yishuv aligns with diaspora protest; Berlin retaliates against German Jews.', effects: { diplomacy: +5, economy: -3 }, tension: 0, flags: ['boycott-germany'] },
+          { label: 'Prioritize quietly building the institutions of state', outcome: 'Land, settlements, schools, defense — the foundations deepen.', effects: { economy: +5, stability: +5, military: +3 }, tension: 0, flags: ['state-building'] },
+        ],
+      },
     },
   },
 
@@ -963,6 +987,30 @@ export const events = [
         { label: 'Press the proposal anyway', outcome: 'Soviet diplomacy holds the moral high ground.', effects: { diplomacy: +5, aggression: +3 }, tension: -2, flags: ['grand-alliance'] },
         { label: 'Drop collective security — fortress USSR', outcome: 'Litvinov is sidelined; the Red Army prepares to fight alone.', effects: { military: +5, diplomacy: -8, aggression: +5 }, tension: +2, flags: ['fortress-socialism'] },
       ]},
+      poland: {
+        description: 'Austria is German. Czechoslovakia is now three-sided in. Beck calculates Polish exposure rises with each German step.',
+        choices: [
+          { label: 'Reinforce the western army', outcome: 'New divisions raised; the budget bleeds.', effects: { military: +8, economy: -5 }, tension: +1 },
+          { label: 'Send a stern note to Berlin about Polish minority in Austria', outcome: 'A token gesture; Berlin promises nothing.', effects: { diplomacy: 0 }, tension: 0 },
+          { label: 'Quietly explore an understanding with Berlin over Czech borders', outcome: 'A grim possibility takes shape: Cieszyn for Polish quiescence.', effects: { aggression: +5 }, tension: +3 },
+        ],
+      },
+      czechoslovakia: {
+        description: 'Austria is gone. Three of your frontiers are now Reich frontiers. The Sudeten radicals are emboldened. The army goes to alert.',
+        choices: [
+          { label: 'Order partial mobilization', outcome: 'Reserves to the frontier; the Mandate of Versailles trembles.', effects: { military: +10, stability: +5, aggression: +5 }, tension: 0, flags: ['czech-mobilized'] },
+          { label: 'Beg for an explicit Anglo-French commitment', outcome: 'London hedges, Paris reassures vaguely.', effects: { diplomacy: -3 }, tension: +2 },
+          { label: 'Open exploratory talks with Berlin', outcome: 'Hitler is delighted; you have shown weakness.', effects: { diplomacy: -8, aggression: -5 }, tension: +5 },
+        ],
+      },
+      yishuv: {
+        description: 'Austria is German. Two hundred thousand Austrian Jews face the same persecution as Germans. The Mandate quota is already exhausted.',
+        choices: [
+          { label: 'Send Hagana agents to Vienna to organize evacuation', outcome: 'Adolf Eichmann’s Central Office for Jewish Emigration becomes the unwilling counterpart.', effects: { stability: +5, economy: +3 }, tension: +1, flags: ['vienna-rescue'] },
+          { label: 'Lobby London for emergency immigration certificates', outcome: 'Some additional certificates granted; the quota holds.', effects: { diplomacy: +5, stability: +3 }, tension: 0 },
+          { label: 'Massively expand illegal immigration operations', outcome: 'Ships are bought, crews recruited; the first wave reaches Haifa by autumn.', effects: { stability: +5, diplomacy: -8, military: +3 }, tension: 0, flags: ['aliyah-bet-expanded'] },
+        ],
+      },
     },
   },
 
@@ -995,6 +1043,22 @@ export const events = [
         { label: 'Privately urge European leaders to negotiate', outcome: 'Back-channels to London, Paris, Berlin.', effects: { diplomacy: +5 }, tension: -1 },
         { label: 'Stay quiet', outcome: 'Silence; America watches.', effects: { stability: +3 }, tension: +2, flags: ['isolationist'] },
       ]},
+      czechoslovakia: {
+        description: 'Henlein’s Sudetendeutsche Partei demands "autonomy" — code for transfer to the Reich. Berlin amplifies every grievance. The General Staff briefs the Castle on Plan VII.',
+        choices: [
+          { label: 'Concede broad Sudeten autonomy', outcome: 'Henlein declares the offer insufficient within hours.', effects: { stability: -3, diplomacy: +3 }, tension: +2 },
+          { label: 'Stand firm; reinforce the fortifications', outcome: 'Concrete and barbed wire along the frontier; the army on alert.', effects: { military: +10, stability: +3, aggression: +5 }, tension: -1, flags: ['czech-firm'] },
+          { label: 'Beg London and Paris for explicit war guarantees', outcome: 'Chamberlain demurs; Daladier murmurs. The General Staff curses.', effects: { diplomacy: -5 }, tension: +3 },
+        ],
+      },
+      poland: {
+        description: 'The Sudeten crisis. Berlin signals it would welcome Polish "interest" in Cieszyn. Beck weighs the temptation against Czechoslovak survival.',
+        choices: [
+          { label: 'Coordinate with Berlin over Czechoslovakia', outcome: 'A grim alignment; the General Staff begins planning the Cieszyn move.', effects: { diplomacy: -8, aggression: +8 }, tension: +3 },
+          { label: 'Press for an Anglo-Polish-French stand for Prague', outcome: 'London hedges; Paris is grateful but inactive.', effects: { diplomacy: +5 }, tension: -1 },
+          { label: 'Stay quiet and prepare for the consequences', outcome: 'You wait to see what Munich brings.', effects: { stability: +3 }, tension: 0 },
+        ],
+      },
     },
   },
 
@@ -1030,6 +1094,14 @@ export const events = [
         { label: 'Endorse Munich publicly', outcome: 'A speech that reads better in polls than in history.', effects: { stability: +5, aggression: -8 }, tension: +4, flags: ['endorsed-munich'] },
         { label: 'Express grave concern; accelerate aircraft production', outcome: 'Factories begin to tool up; the world barely notices.', effects: { military: +8, diplomacy: +3, aggression: +5 }, tension: -2, flags: ['secret-rearm'] },
       ]},
+      czechoslovakia: {
+        description: 'Chamberlain and Daladier have agreed to give the Sudetenland to Hitler — without consulting Prague. Beneš is informed by telegram.',
+        choices: [
+          { label: 'Accept Munich under protest', outcome: 'You sign because you must. The frontier fortifications, the heart of the army, the heart of the Republic — all gone.', effects: { stability: -15, diplomacy: -15, military: -15, aggression: -10 }, tension: +5, flags: ['munich', 'munich-accepted'] },
+          { label: 'Refuse — fight alone if necessary', outcome: 'A doomed defense. The Wehrmacht crushes you within weeks; the army dies fighting.', effects: { military: -25, stability: -20, aggression: +20 }, tension: +20, flags: ['czech-resists', 'wwii'] },
+          { label: 'Fight; appeal to the USSR for direct aid', outcome: 'Soviet aircraft transit through Romania; the war is longer and bloodier.', effects: { military: -15, diplomacy: +5, aggression: +15 }, tension: +18, flags: ['czech-resists', 'soviet-intervention', 'wwii'] },
+        ],
+      },
     },
   },
 
@@ -1105,6 +1177,14 @@ export const events = [
         { label: 'Ask for new aircraft and ships', outcome: 'The arsenal of democracy stirs.', effects: { military: +8, economy: +3 }, tension: 0, flags: ['us-rearm-1939'] },
         { label: 'Stay neutral', outcome: 'Berlin notes American passivity once more.', effects: { stability: +3, diplomacy: -5 }, tension: +3, flags: ['isolationist'] },
       ]},
+      poland: {
+        description: 'Prague has fallen. Beck knows you are next. Britain offers a guarantee; Hitler demands Danzig.',
+        choices: [
+          { label: 'Accept the British guarantee', outcome: 'A treaty, however hollow, is signed; Polish honour is committed.', effects: { diplomacy: +12, military: +3, aggression: +5 }, tension: -2, flags: ['british-guaranteed'] },
+          { label: 'Propose a Polish-Soviet alliance', outcome: 'Moscow is interested; the right at home is appalled. The talks drag.', effects: { diplomacy: +5, stability: -5 }, tension: -2, flags: ['polish-soviet-attempt'] },
+          { label: 'Stand alone — trust no foreign guarantee', outcome: 'Polish exceptionalism. The General Staff prepares for war on two fronts.', effects: { military: +5, aggression: +5 }, tension: +3 },
+        ],
+      },
     },
   },
 
@@ -1164,6 +1244,289 @@ export const events = [
         { label: 'Strict neutrality', outcome: 'America turns away; Britain and France stand alone.', effects: { stability: +3, diplomacy: -8, aggression: -8 }, tension: +3, flags: ['strict-neutrality', 'isolationist'] },
         { label: 'Ask Congress to repeal the arms embargo', outcome: 'Cash and Carry will pass in November; materiel flows.', effects: { diplomacy: +10, economy: +5, aggression: +8 }, tension: -3, flags: ['cash-and-carry', 'arsenal-of-democracy'] },
       ]},
+      poland: {
+        description: 'Berlin and Moscow have signed in secret. The Wehrmacht is at the western frontier; the Red Army gathers in the east. There is no good answer left.',
+        choices: [
+          { label: 'Fight on both fronts to the last cartridge', outcome: 'Polish cavalry charges Panzers; Warsaw holds for three weeks. The Republic dies in arms.', effects: { military: +5, aggression: +20, stability: -25 }, tension: +25, flags: ['poland-fights', 'wwii'] },
+          { label: 'Order the army to fall back to the Romanian bridgehead', outcome: 'A planned retreat saves what can be saved; the government escapes to the West.', effects: { military: -10, diplomacy: +5, aggression: +10 }, tension: +20, flags: ['romanian-bridgehead', 'wwii'] },
+          { label: 'Sue for terms', outcome: 'Hitler will not accept terms; you fight anyway, with morale halved.', effects: { stability: -20, military: -10, aggression: -8 }, tension: +20, flags: ['polish-collapse', 'wwii'] },
+        ],
+      },
+      yishuv: {
+        description: 'Europe is at war. The British Mandate forbids you arms; Hitler is the worst enemy a Jewish state could imagine. Ben-Gurion’s formula must be put into practice.',
+        choices: [
+          { label: 'Volunteer the Yishuv to fight alongside Britain', outcome: 'Tens of thousands enlist; Jewish brigades are formed eventually.', effects: { military: +12, diplomacy: +10, aggression: +5 }, tension: -2, flags: ['fight-with-britain'] },
+          { label: 'Focus everything on Aliyah Bet — saving European Jews', outcome: 'Hagana ships run the British blockade; some saved, many drowned.', effects: { stability: +5, diplomacy: -8, aggression: +5 }, tension: +2, flags: ['rescue-priority'] },
+          { label: 'Build the underground army in secret', outcome: 'Hagana, Palmach, hidden arms caches. The war for after the war begins now.', effects: { military: +15, stability: +5 }, tension: 0, flags: ['hidden-army'] },
+        ],
+      },
+    },
+  },
+
+  // ============================================================
+  // POLAND — DOMESTIC EVENTS
+  // ============================================================
+  {
+    id: 'poland-1934-german-pact',
+    year: 1934, month: 1, title: 'Beck’s Gamble',
+    appliesTo: ['poland'],
+    variants: {
+      poland: {
+        description: 'Foreign Minister Beck proposes a ten-year non-aggression pact with Hitler’s Germany — a stunning break with the old French-led system.',
+        choices: [
+          { label: 'Sign the Polish-German Non-Aggression Pact', outcome: 'A diplomatic coup; Berlin is calmed. Paris is appalled.', effects: { diplomacy: +5, stability: +5, aggression: 0 }, tension: -2, flags: ['polish-german-pact'] },
+          { label: 'Hold to the French alliance only', outcome: 'No deal with Berlin; the French alliance is preserved unsullied.', effects: { diplomacy: +3, military: +3 }, tension: 0 },
+          { label: 'Propose a parallel pact with Moscow as well', outcome: 'A balanced posture between the giants; both are wary.', effects: { diplomacy: +8 }, tension: -3, flags: ['polish-balance'] },
+        ],
+      },
+    },
+  },
+  {
+    id: 'poland-1935-pilsudski',
+    year: 1935, month: 5, title: 'The Marshal is Dead',
+    appliesTo: ['poland'],
+    variants: {
+      poland: {
+        description: 'Piłsudski has died. The Sanacja regime he built must now stand without him. The Colonels — Beck, Rydz-Śmigły, Mościcki — propose to keep his system.',
+        choices: [
+          { label: 'Continue the Colonels’ regime', outcome: 'Authoritarian continuity. The opposition is suppressed; the state limps on.', effects: { stability: +5, diplomacy: -3 }, tension: 0, flags: ['colonels-regime'] },
+          { label: 'Liberalize — restore parliamentary rule', outcome: 'Free elections return; the regime fragments but breathes.', effects: { stability: -5, diplomacy: +8, economy: +3 }, tension: 0, flags: ['polish-democracy'] },
+          { label: 'Concentrate power in Marshal Rydz-Śmigły', outcome: 'A military dictatorship in all but name.', effects: { stability: +8, military: +5, diplomacy: -5 }, tension: 0 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'poland-1936-industrial',
+    year: 1936, month: 9, title: 'The Central Industrial District',
+    appliesTo: ['poland'],
+    variants: {
+      poland: {
+        description: 'Deputy Premier Kwiatkowski proposes a four-year plan: build a heavy-industrial heartland in the southern interior, safe from invasion routes.',
+        choices: [
+          { label: 'Approve the full COP programme', outcome: 'Steel and arms plants rise around Stalowa Wola; the economy modernizes.', effects: { economy: +10, military: +8, stability: +3 }, tension: 0, flags: ['polish-industry'] },
+          { label: 'A more modest expansion', outcome: 'Some new plants, no transformation. The army gets what it gets.', effects: { economy: +3, military: +3 }, tension: 0 },
+          { label: 'Spend on agricultural reform instead', outcome: 'Peasant smallholdings get loans and machinery. The army remains under-equipped.', effects: { economy: +5, stability: +8, military: -3 }, tension: 0 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'poland-1938-cieszyn',
+    year: 1938, month: 10, title: 'Cieszyn',
+    appliesTo: ['poland'],
+    variants: {
+      poland: {
+        description: 'With Czechoslovakia carved up at Munich, Beck sees a chance to grab the long-disputed Cieszyn (Teschen) region from the dying Czech state.',
+        choices: [
+          { label: 'Issue the ultimatum; take Cieszyn', outcome: 'Polish troops occupy the territory. The world calls you a jackal feeding on a corpse.', effects: { military: +3, economy: +3, diplomacy: -10, aggression: +10 }, tension: +3, flags: ['cieszyn-taken'] },
+          { label: 'Stand with Czechoslovakia, demand only Polish minority rights', outcome: 'A principled stand; Prague offers gratitude that does not survive its own collapse.', effects: { diplomacy: +8, aggression: -5 }, tension: -2, flags: ['polish-honour'] },
+          { label: 'Stay silent, demand nothing', outcome: 'A passive posture; nothing is gained, nothing is lost.', effects: { diplomacy: 0 }, tension: 0 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'poland-1939-danzig',
+    year: 1939, month: 3, title: 'The Danzig Demand',
+    appliesTo: ['poland'],
+    variants: {
+      poland: {
+        description: 'Ribbentrop demands Danzig and an extraterritorial road across the Corridor. Beck calls a public assembly: Poland will fight, or Poland will fold.',
+        choices: [
+          { label: '"We do not know the word peace at any price"', outcome: 'Beck’s defiant speech to the Sejm. Britain offers a guarantee within weeks.', effects: { diplomacy: +12, military: +5, aggression: +8, stability: +8 }, tension: +5, flags: ['polish-defiance'] },
+          { label: 'Open negotiations — perhaps a deal can be found', outcome: 'You stall for time; Hitler reads weakness.', effects: { diplomacy: -3, aggression: -5 }, tension: +3, flags: ['polish-negotiate'] },
+          { label: 'Concede Danzig in exchange for guarantees on the Corridor', outcome: 'A partial surrender; Hitler demands more next month.', effects: { diplomacy: -8, stability: -8, aggression: -8 }, tension: +2, flags: ['polish-concession'] },
+        ],
+      },
+    },
+  },
+
+  // ============================================================
+  // CZECHOSLOVAKIA — DOMESTIC EVENTS
+  // ============================================================
+  {
+    id: 'czech-1933-henlein',
+    year: 1933, month: 10, title: 'The Sudeten German Front',
+    appliesTo: ['czechoslovakia'],
+    variants: {
+      czechoslovakia: {
+        description: 'Konrad Henlein has founded the Sudetendeutsche Heimatfront — a movement of three million Sudeten Germans whose loyalty to the Republic is, at best, conditional.',
+        choices: [
+          { label: 'Allow it; treat it as a normal opposition party', outcome: 'Czechoslovak democracy holds firm. Henlein grows steadily, funded from Berlin.', effects: { stability: +3, diplomacy: +5 }, tension: +2, flags: ['henlein-tolerated'] },
+          { label: 'Ban the movement; arrest its leaders', outcome: 'A crackdown. Henlein becomes a martyr; Berlin acquires a casus belli for the future.', effects: { stability: -5, diplomacy: -5, aggression: +5 }, tension: +5, flags: ['henlein-banned'] },
+          { label: 'Negotiate concessions to Sudeten German cultural autonomy', outcome: 'Schools, civil-service jobs, and budget shares to the Sudeten regions.', effects: { stability: +8, diplomacy: +5 }, tension: 0, flags: ['sudeten-concessions'] },
+        ],
+      },
+    },
+  },
+  {
+    id: 'czech-1935-benes',
+    year: 1935, month: 12, title: 'Masaryk Retires',
+    appliesTo: ['czechoslovakia'],
+    variants: {
+      czechoslovakia: {
+        description: 'The father of the Republic is too old. The presidency must pass. Edvard Beneš, foreign minister for seventeen years, is the obvious heir — but the agrarians have other ideas.',
+        choices: [
+          { label: 'Elect Beneš — continuity in foreign policy', outcome: 'Beneš takes the Castle. The alliance system he built is now his to defend.', effects: { diplomacy: +8, stability: +5 }, tension: 0, flags: ['benes-president'] },
+          { label: 'Choose an agrarian compromise candidate', outcome: 'A more domestically focused presidency. Beneš stays at the foreign ministry.', effects: { stability: +3 }, tension: 0 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'czech-1935-soviet-treaty',
+    year: 1935, month: 5, title: 'The Soviet Treaty',
+    appliesTo: ['czechoslovakia'],
+    variants: {
+      czechoslovakia: {
+        description: 'Moscow proposes a mutual-assistance pact — conditional on France acting first. Soviet aid in any war with Germany, in exchange for Czech recognition.',
+        choices: [
+          { label: 'Sign the Czechoslovak-Soviet Treaty', outcome: 'A second great-power guarantor; the right at home is appalled.', effects: { diplomacy: +10, military: +5, stability: -3 }, tension: -2, flags: ['czech-soviet-treaty'] },
+          { label: 'Demand unconditional Soviet aid first', outcome: 'Moscow refuses; the deal falls through.', effects: { diplomacy: -3 }, tension: +1 },
+          { label: 'Reject — Bolshevism is no ally of democracy', outcome: 'You hold to the French alliance alone. The right cheers; the General Staff worries.', effects: { diplomacy: +3, stability: +3, military: -3 }, tension: +1, flags: ['czech-no-soviet'] },
+        ],
+      },
+    },
+  },
+  {
+    id: 'czech-1938-may-crisis',
+    year: 1938, month: 5, title: 'The May Crisis',
+    appliesTo: ['czechoslovakia'],
+    variants: {
+      czechoslovakia: {
+        description: 'Reports — perhaps false — of German troops massing at the frontier. The General Staff requests partial mobilization.',
+        choices: [
+          { label: 'Mobilize the reserves', outcome: 'The army stands ready; Hitler postpones his plans, briefly. London is annoyed.', effects: { military: +10, diplomacy: -3, aggression: +5, stability: +5 }, tension: -2, flags: ['czech-mobilized'] },
+          { label: 'Mobilize only the frontier units', outcome: 'A measured response; the threat passes without alarm.', effects: { military: +5, diplomacy: +3 }, tension: 0 },
+          { label: 'Stand down — refuse to be provoked', outcome: 'No mobilization. Berlin notes how easily you flinch from a phantom.', effects: { military: -3, diplomacy: -5, aggression: -3 }, tension: +3 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'czech-1938-second-republic',
+    year: 1938, month: 11, title: 'After Munich',
+    appliesTo: ['czechoslovakia'],
+    variants: {
+      czechoslovakia: {
+        description: 'The Sudetenland is gone. The frontier fortifications are gone. Beneš has resigned and fled. Slovakia and Subcarpathian Ruthenia demand autonomy. What is left of the Republic?',
+        choices: [
+          { label: 'Grant Slovak and Ruthenian autonomy; preserve a federation', outcome: 'A "Czecho-Slovakia" hyphenated and weakened; the state survives, briefly.', effects: { stability: -5, diplomacy: -3 }, tension: 0, flags: ['czechoslovakia-federated'] },
+          { label: 'Hold the centralized state by force', outcome: 'Slovakia revolts; the army cannot hold both flanks.', effects: { stability: -15, military: -5 }, tension: 0 },
+          { label: 'Seek a German guarantee against further dismemberment', outcome: 'A humiliating dependence on the same power that just dismembered you.', effects: { stability: +3, diplomacy: -8, aggression: -10 }, tension: +2, flags: ['czech-german-protectorate'] },
+        ],
+      },
+    },
+  },
+  {
+    id: 'czech-1939-prague-falls',
+    year: 1939, month: 3, title: 'The German Demand',
+    appliesTo: ['czechoslovakia'],
+    requires: ['czechoslovakia-federated'],
+    variants: {
+      czechoslovakia: {
+        description: 'Hitler summons President Hácha to Berlin. Slovak separatists, backed from Berlin, have declared independence. The Wehrmacht is across the frontier by dawn.',
+        choices: [
+          { label: 'Sign the protectorate decree under duress', outcome: 'Hácha collapses in Berlin; Bohemia and Moravia become a German protectorate.', effects: { stability: -20, diplomacy: -10, aggression: -15 }, tension: +10, flags: ['protectorate'] },
+          { label: 'Refuse — order the army to resist', outcome: 'Sporadic fighting; Prague falls within days. The state is destroyed but not surrendered.', effects: { military: -15, stability: -25, aggression: +15 }, tension: +12, flags: ['czech-fought'] },
+        ],
+      },
+    },
+  },
+
+  // ============================================================
+  // YISHUV — DOMESTIC EVENTS
+  // ============================================================
+  {
+    id: 'yishuv-1933-haavara',
+    year: 1933, month: 8, title: 'The Transfer Agreement',
+    appliesTo: ['yishuv'],
+    variants: {
+      yishuv: {
+        description: 'Nazi Germany has proposed an unprecedented arrangement: emigrating German Jews may transfer their wealth to Palestine — but only as payment for German exports. The Jewish Agency must answer.',
+        choices: [
+          { label: 'Sign the Haavara Agreement', outcome: 'Tens of thousands of German Jews and their capital reach Palestine. The international Jewish boycott of Germany is fatally weakened.', effects: { economy: +12, diplomacy: -8, stability: +5 }, tension: 0, flags: ['haavara'] },
+          { label: 'Reject — uphold the global boycott of Nazi Germany', outcome: 'The boycott is preserved as a moral instrument. German Jews must flee with nothing.', effects: { economy: -5, diplomacy: +5 }, tension: 0, flags: ['boycott-upheld'] },
+          { label: 'Allow private transfers, no official agreement', outcome: 'A workable compromise. Some capital flows quietly; the boycott is bent but not broken.', effects: { economy: +5 }, tension: 0 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'yishuv-1934-aliyah',
+    year: 1934, month: 5, title: 'The Aliyah Question',
+    appliesTo: ['yishuv'],
+    variants: {
+      yishuv: {
+        description: 'European refugees are arriving in numbers that strain the British quota. The Mandate sets immigration certificates each year by "economic absorptive capacity." How does the Yishuv work the system?',
+        choices: [
+          { label: 'Maximize official immigration through the quota', outcome: 'Cooperative pressure on the Mandate; numbers climb steadily.', effects: { economy: +5, stability: +5, diplomacy: +3 }, tension: 0, flags: ['aliyah-legal'] },
+          { label: 'Organize Aliyah Bet — illegal immigration by sea', outcome: 'Ships slip past British patrols; the Mandate fumes.', effects: { stability: +3, diplomacy: -5 }, tension: 0, flags: ['aliyah-bet'] },
+          { label: 'Prioritize trained pioneers over refugees', outcome: 'The kibbutz movement grows; the refugees in Vienna are left to wait.', effects: { economy: +8, stability: +3, military: +3 }, tension: 0, flags: ['pioneer-priority'] },
+        ],
+      },
+    },
+  },
+  {
+    id: 'yishuv-1936-arab-revolt',
+    year: 1936, month: 4, title: 'The Arab Revolt',
+    appliesTo: ['yishuv'],
+    variants: {
+      yishuv: {
+        description: 'A general strike by the Arab population has escalated into rural violence against Jews, the Mandate, and Arab "collaborators." The Yishuv must decide how the Haganah responds.',
+        choices: [
+          { label: 'Havlagah — strict restraint, defensive only', outcome: 'The Haganah holds its fire; the Yishuv earns British and international sympathy.', effects: { diplomacy: +10, stability: +5, aggression: -5 }, tension: 0, flags: ['havlagah'] },
+          { label: 'Endorse Irgun retaliation against Arab targets', outcome: 'The revisionist underground strikes back; the cycle of violence deepens.', effects: { diplomacy: -8, stability: -3, aggression: +10, military: +5 }, tension: 0, flags: ['irgun-active'] },
+          { label: 'Cooperate openly with the British — joint patrols, Jewish Settlement Police', outcome: 'Haganah members are armed and trained by the Mandate; a generation of officers emerges.', effects: { military: +10, diplomacy: +8, stability: +3 }, tension: 0, flags: ['british-cooperation'] },
+        ],
+      },
+    },
+  },
+  {
+    id: 'yishuv-1937-peel',
+    year: 1937, month: 7, title: 'The Peel Commission',
+    appliesTo: ['yishuv'],
+    variants: {
+      yishuv: {
+        description: 'The Royal Commission proposes partition: a small Jewish state in the coastal plain and Galilee, an Arab state federated with Transjordan, a population transfer between them.',
+        choices: [
+          { label: 'Accept the principle — a small state now is sovereignty', outcome: 'Ben-Gurion’s line carries the Zionist Congress; the Mandate is asked to act.', effects: { diplomacy: +10, stability: +5, aggression: 0 }, tension: 0, flags: ['accepted-partition'] },
+          { label: 'Reject — the boundaries are inadequate', outcome: 'The maximalist line wins. The partition proposal dies in committee.', effects: { diplomacy: -5, aggression: +5 }, tension: 0, flags: ['rejected-partition'] },
+          { label: 'Accept in principle, demand expanded borders', outcome: 'A negotiating posture. Endless debate; little progress before the Revolt resumes.', effects: { diplomacy: +3 }, tension: 0 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'yishuv-1938-tower-stockade',
+    year: 1938, month: 6, title: 'Tower and Stockade',
+    appliesTo: ['yishuv'],
+    variants: {
+      yishuv: {
+        description: 'A new technique: prefabricated settlements erected in a single day on contested land. The Mandate’s "homa u-migdal" tolerance lets you create facts on the ground.',
+        choices: [
+          { label: 'Push hard — fifty new settlements in two years', outcome: 'The Galilee and Negev gain a chain of fortified kibbutzim.', effects: { economy: +8, military: +8, stability: +3, aggression: +5 }, tension: 0, flags: ['settlement-push'] },
+          { label: 'Build cautiously, only on legally purchased land', outcome: 'Slower growth; less Arab antagonism; less ground gained.', effects: { economy: +3, diplomacy: +5 }, tension: 0 },
+          { label: 'Concentrate investment in existing settlements', outcome: 'The kibbutzim deepen; the map does not change.', effects: { economy: +5, stability: +5 }, tension: 0 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'yishuv-1939-white-paper',
+    year: 1939, month: 5, title: 'The White Paper',
+    appliesTo: ['yishuv'],
+    variants: {
+      yishuv: {
+        description: 'Britain announces: 75,000 Jewish immigrants over five years, then nothing without Arab consent. Land sales restricted. With Hitler’s shadow over Europe, the gates of Palestine are closing.',
+        choices: [
+          { label: '"We will fight the war as if there is no White Paper, the White Paper as if there is no war"', outcome: 'Ben-Gurion’s formula: full cooperation against Hitler, total resistance to immigration limits.', effects: { military: +5, diplomacy: 0, aggression: +5, stability: +5 }, tension: +3, flags: ['ben-gurion-formula'] },
+          { label: 'Open revolt against British authority', outcome: 'The Irgun’s line. Bombings, attacks on Mandate officials; the British turn fully against the Yishuv.', effects: { diplomacy: -20, military: +3, aggression: +15, stability: -8 }, tension: +3, flags: ['british-revolt'] },
+          { label: 'Acquiesce — accept the limits, work within them', outcome: 'The legal path. European Jews continue to die at the docks of Haifa.', effects: { diplomacy: +5, stability: -10, aggression: -10 }, tension: 0, flags: ['white-paper-accepted'] },
+          { label: 'Massive Aliyah Bet — flotillas of illegals', outcome: 'Hagana ships run the blockade; many drown, many reach the shore.', effects: { stability: +5, diplomacy: -10, aggression: +5 }, tension: +2, flags: ['aliyah-bet-massive'] },
+        ],
+      },
     },
   },
 ]
