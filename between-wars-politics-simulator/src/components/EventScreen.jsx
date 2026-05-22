@@ -1,20 +1,34 @@
 import { nations } from '../data/nations'
+import { resolveDescription, visibleChoices } from '../data/branching'
 
 const MONTH_NAMES = [
   '', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
   'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
 ]
 
+// Game runs January 1933 → September 1939 (81 months).
+const START_YEAR = 1933
+const END_YEAR = 1939
+const END_MONTH = 9
+const TOTAL_MONTHS = (END_YEAR - START_YEAR) * 12 + END_MONTH
+
+function progressFor(year, month) {
+  const elapsed = (year - START_YEAR) * 12 + ((month || 1) - 1)
+  return Math.max(0, Math.min(1, elapsed / TOTAL_MONTHS))
+}
+
 export default function EventScreen({
   nationId,
   event,
   variant,
-  eventNumber,
-  totalEvents,
+  flagSet,
   previous,
   onChoose,
 }) {
   const n = nations[nationId]
+  const description = resolveDescription(variant, flagSet)
+  const choices = visibleChoices(variant, flagSet)
+  const pct = Math.round(progressFor(event.year, event.month) * 100)
 
   return (
     <div
@@ -31,9 +45,11 @@ export default function EventScreen({
           <span className="event-date">
             {MONTH_NAMES[event.month] || ''} {event.year}
           </span>
-          <span className="event-counter">
-            DECISION {eventNumber} / {totalEvents}
-          </span>
+          <div className="event-progress-bar">
+            <div className="event-progress-fill" style={{ width: `${pct}%` }} />
+            <span className="event-progress-anchor anchor-start">1933</span>
+            <span className="event-progress-anchor anchor-end">1939</span>
+          </div>
         </div>
 
         {previous && (
@@ -47,10 +63,10 @@ export default function EventScreen({
 
         <h2 className="event-title">{variant.title || event.title}</h2>
 
-        <div className="event-body">{variant.description}</div>
+        <div className="event-body">{description}</div>
 
         <div className="event-choices">
-          {variant.choices.map((c, i) => (
+          {choices.map((c, i) => (
             <button
               key={i}
               className="choice-button"

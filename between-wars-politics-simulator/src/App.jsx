@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { nations } from './data/nations'
 import { events } from './data/events'
 import { computeEnding } from './data/endings'
+import { meetsRequirements } from './data/branching'
 import TitleScreen from './components/TitleScreen'
 import NationSelect from './components/NationSelect'
 import Briefing from './components/Briefing'
@@ -23,6 +24,20 @@ function applyStatDelta(stats, delta, key) {
   return clamp((stats[key] || 0) + (delta || 0))
 }
 
+// Scans forward from `fromIndex` for the next event whose appliesTo/requires/excludes
+// are all satisfied by the current flags. Returns the index, or -1 if none remains.
+function findNextEventIndex(sortedEvents, fromIndex, nationId, flagSet) {
+  for (let i = fromIndex; i < sortedEvents.length; i++) {
+    const e = sortedEvents[i]
+    if (e.appliesTo && !e.appliesTo.includes(nationId)) continue
+    if (!meetsRequirements(e, flagSet)) continue
+    const variant = e.variants[nationId]
+    if (!variant) continue
+    return i
+  }
+  return -1
+}
+
 export default function App() {
   const [phase, setPhase] = useState('title') // title | select | briefing | event | ending
   const [nationId, setNationId] = useState(null)
@@ -33,13 +48,14 @@ export default function App() {
   const [eventIndex, setEventIndex] = useState(0)
   const [previous, setPrevious] = useState(null) // recap shown atop the next event
 
-  // Events that apply to the chosen nation, in chronological order.
-  const playerEvents = useMemo(() => {
-    if (!nationId) return []
-    return events
-      .filter((e) => !e.appliesTo || e.appliesTo.includes(nationId))
-      .sort((a, b) => a.year - b.year || (a.month || 0) - (b.month || 0))
-  }, [nationId])
+  // All events sorted chronologically. We walk this list with eventIndex; the filter
+  // happens at look-up time so flags set during play can affect what fires next.
+  const sortedEvents = useMemo(
+    () => [...events].sort((a, b) => a.year - b.year || (a.month || 0) - (b.month || 0)),
+    [],
+  )
+
+  const flagSet = useMemo(() => new Set(flags), [flags])
 
   function startGame() {
     setPhase('select')
@@ -61,7 +77,7 @@ export default function App() {
   }
 
   function chooseOption(choice) {
-    const currentEvent = playerEvents[eventIndex]
+    const currentEvent = sortedEvents[eventIndex]
     const variant = currentEvent.variants[nationId]
 
     // Apply stat deltas.
@@ -77,13 +93,14 @@ export default function App() {
     const nextTension = clamp(tension + (choice.tension || 0))
     setTension(nextTension)
 
-    // Apply flags.
+    // Apply flags. Compute the new flag set up front so we can use it to find the next event.
+    let nextFlagsArray = flags
     if (choice.flags && choice.flags.length) {
-      const nextFlags = Array.from(new Set([...flags, ...choice.flags]))
-      setFlags(nextFlags)
+      nextFlagsArray = Array.from(new Set([...flags, ...choice.flags]))
+      setFlags(nextFlagsArray)
     }
+    const nextFlagSet = new Set(nextFlagsArray)
 
-    // Log history.
     setHistory((h) => [
       ...h,
       {
@@ -93,14 +110,14 @@ export default function App() {
       },
     ])
 
-    // Stash recap for the top of the next screen.
     setPrevious({ choice: choice.label, outcome: choice.outcome })
 
-    const nextIndex = eventIndex + 1
-    if (nextIndex >= playerEvents.length) {
+    // Find the next eligible event from eventIndex+1 onward, using the new flag set.
+    const nextIdx = findNextEventIndex(sortedEvents, eventIndex + 1, nationId, nextFlagSet)
+    if (nextIdx === -1) {
       setPhase('ending')
     } else {
-      setEventIndex(nextIndex)
+      setEventIndex(nextIdx)
     }
   }
 
@@ -136,20 +153,35 @@ export default function App() {
   }
 
   if (phase === 'event') {
-    const event = playerEvents[eventIndex]
-    const variant = event.variants[nationId]
-    if (!variant) {
-      // Defensive: shouldn't happen given appliesTo filter, but skip if it does.
-      setEventIndex(eventIndex + 1)
-      return null
+    // On first entry, eventIndex may point at an ineligible event. Skip forward as needed.
+    let idx = eventIndex
+    if (idx === 0 || !sortedEvents[idx]) {
+      idx = findNextEventIndex(sortedEvents, 0, nationId, flagSet)
+      if (idx === -1) {
+        // No events at all — straight to ending.
+        const ending = computeEnding({ nationId, stats, flags, tension, history })
+        return (
+          <Ending
+            nationId={nationId}
+            stats={stats}
+            ending={ending}
+            history={history}
+            onRestart={restart}
+          />
+        )
+      }
+      if (idx !== eventIndex) setEventIndex(idx)
     }
+
+    const event = sortedEvents[idx]
+    const variant = event.variants[nationId]
+
     return (
       <EventScreen
         nationId={nationId}
         event={event}
         variant={variant}
-        eventNumber={eventIndex + 1}
-        totalEvents={playerEvents.length}
+        flagSet={flagSet}
         previous={previous}
         onChoose={chooseOption}
       />

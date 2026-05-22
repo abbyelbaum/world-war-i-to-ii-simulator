@@ -70,6 +70,7 @@ export const events = [
     id: 'germany-1933-reichstag-fire',
     year: 1933, month: 2, title: 'The Reichstag Burns',
     appliesTo: ['germany'],
+    requires: ['hitler-chancellor'],
     variants: {
       germany: {
         description: 'A Dutch Communist is arrested at the scene. The Nazis demand emergency powers.',
@@ -134,6 +135,7 @@ export const events = [
     id: 'germany-1933-enabling',
     year: 1933, month: 3, title: 'The Enabling Act',
     appliesTo: ['germany'],
+    requires: ['hitler-chancellor'],
     variants: {
       germany: {
         description: 'The Nazi-Center coalition can pass an act letting the Chancellor rule by decree for four years.',
@@ -149,6 +151,7 @@ export const events = [
     id: 'germany-1933-one-party',
     year: 1933, month: 7, title: 'Other Parties Banned',
     appliesTo: ['germany'],
+    requires: ['hitler-chancellor'],
     variants: {
       germany: {
         description: 'Goebbels proposes dissolving every party but the NSDAP.',
@@ -289,6 +292,23 @@ export const events = [
   // 1934
   // ============================================================
   {
+    id: 'germany-1934-coalition',
+    year: 1934, month: 4, title: 'Holding the Coalition',
+    appliesTo: ['germany'],
+    requires: ['weimar-survives'],
+    variants: {
+      germany: {
+        description: 'The Grand Coalition is fragile. Industrialists, the army, and the Nazi rump press from different sides.',
+        choices: [
+          { label: 'Make concessions to industry', outcome: 'Krupp and Thyssen breathe easier; the SPD seethes.', effects: { economy: +8, stability: -3 }, tension: 0 },
+          { label: 'Press a public-works programme', outcome: 'Roads, rail, and unemployment offices spring up; deficits widen.', effects: { economy: +10, stability: +5 }, tension: 0, flags: ['public-works'] },
+          { label: 'Ban the NSDAP after the failed coup', outcome: 'Hitler is arrested; the Republic shows its teeth.', effects: { stability: +5, aggression: +3 }, tension: -2, flags: ['nazis-banned'] },
+        ],
+      },
+    },
+  },
+
+  {
     id: 'germany-1934-army-oath',
     year: 1934, month: 8, title: 'Hindenburg is Dead',
     appliesTo: ['germany'],
@@ -296,8 +316,10 @@ export const events = [
       germany: {
         description: 'The old President is dead. The army wonders to whom it now swears its oath.',
         choices: [
-          { label: 'Combine the offices — Führer of the Reich', outcome: 'Every soldier swears personal loyalty to you.', effects: { stability: +10, military: +5, aggression: +10 }, tension: +3, flags: ['fuhrer'] },
-          { label: 'Elect a new president', outcome: 'A new presidency preserves a fig leaf of separation.', effects: { stability: +3, aggression: 0 }, tension: 0 },
+          { label: 'Combine the offices — Führer of the Reich', outcome: 'Every soldier swears personal loyalty to you.', effects: { stability: +10, military: +5, aggression: +10 }, tension: +3, flags: ['fuhrer'], requires: ['hitler-chancellor'] },
+          { label: 'Elect a centrist president', outcome: 'A constitutional succession; the Republic holds.', effects: { stability: +8, diplomacy: +5, aggression: -3 }, tension: -1, flags: ['weimar-survives'], excludes: ['hitler-chancellor'] },
+          { label: 'Elect a conservative-military president', outcome: 'A general takes the highest office; the Reichswehr is reassured.', effects: { stability: +5, military: +5 }, tension: 0, excludes: ['hitler-chancellor'] },
+          { label: 'Elect a new president', outcome: 'A new presidency preserves a fig leaf of separation.', effects: { stability: +3, aggression: 0 }, tension: 0, requires: ['hitler-chancellor'] },
         ],
       },
     },
@@ -307,6 +329,7 @@ export const events = [
     id: 'germany-1934-long-knives',
     year: 1934, month: 6, title: 'The SA Problem',
     appliesTo: ['germany'],
+    requires: ['hitler-chancellor'],
     variants: {
       germany: {
         description: 'Röhm’s SA wants to absorb the Army. The generals demand a choice.',
@@ -323,10 +346,17 @@ export const events = [
     id: 'shared-1934-dollfuss',
     year: 1934, month: 7, title: 'Dollfuss is Murdered',
     variants: {
-      germany: { description: 'Austrian Nazis have killed Dollfuss. Mussolini moves divisions to the Brenner.', choices: [
-        { label: 'Disavow the coup', outcome: 'You publicly mourn Dollfuss; Mussolini is mollified.', effects: { diplomacy: +8, aggression: -5 }, tension: -3, flags: ['austria-restraint'] },
-        { label: 'Praise the rebels privately', outcome: 'A defiant note to Rome; the Anschluss is delayed by force.', effects: { aggression: +8, diplomacy: -8 }, tension: +4 },
-      ]},
+      germany: {
+        description: 'Austrian Nazis have killed Dollfuss. Mussolini moves divisions to the Brenner.',
+        altDescriptions: [
+          { when: ['weimar-survives'], text: 'Austrian Nazis — encouraged by emigrés in Munich — have killed Dollfuss. Mussolini moves divisions to the Brenner. The Republic must answer for what was done in Germany’s name.' },
+        ],
+        choices: [
+          { label: 'Disavow the coup', outcome: 'You publicly mourn Dollfuss; Mussolini is mollified.', effects: { diplomacy: +8, aggression: -5 }, tension: -3, flags: ['austria-restraint'] },
+          { label: 'Praise the rebels privately', outcome: 'A defiant note to Rome; the Anschluss is delayed by force.', effects: { aggression: +8, diplomacy: -8 }, tension: +4, requires: ['hitler-chancellor'] },
+          { label: 'Arrest the Munich plotters and apologize to Rome', outcome: 'A republican government does not stand by political murder.', effects: { diplomacy: +12, stability: +5, aggression: -8 }, tension: -4, excludes: ['hitler-chancellor'] },
+        ],
+      },
       us: { description: 'Austrian Nazis killed Dollfuss. Mussolini mobilized. Europe holds its breath.', choices: [
         { label: 'Endorse Austrian independence', effects: { diplomacy: +3 }, outcome: 'Symbolic; Berlin shrugs.', tension: -1 },
         { label: 'No comment', effects: { stability: +3 }, outcome: 'Silence from Washington.', tension: +1, flags: ['isolationist'] },
@@ -432,6 +462,23 @@ export const events = [
   // 1935
   // ============================================================
   {
+    id: 'germany-1935-stresemann',
+    year: 1935, month: 5, title: 'A Stresemann for Our Time',
+    appliesTo: ['germany'],
+    requires: ['weimar-survives'],
+    variants: {
+      germany: {
+        description: 'France offers serious treaty-revision talks if Germany commits to the existing frontiers. Stresemann’s heirs see an opening.',
+        choices: [
+          { label: 'Accept — guarantee frontiers, win revision', outcome: 'A new Locarno; Germany returns to the European concert.', effects: { diplomacy: +15, economy: +5, aggression: -3 }, tension: -5, flags: ['new-locarno'] },
+          { label: 'Counter-propose: revision first, frontiers later', outcome: 'Paris bristles; the talks limp along.', effects: { diplomacy: +3 }, tension: +1 },
+          { label: 'Reject — German rights are not for sale', outcome: 'A nationalist hardening; the Western powers stiffen.', effects: { diplomacy: -8, aggression: +8, stability: +3 }, tension: +5, flags: ['nationalist-republic'] },
+        ],
+      },
+    },
+  },
+
+  {
     id: 'germany-1935-saar',
     year: 1935, month: 1, title: 'The Saar Plebiscite',
     appliesTo: ['germany'],
@@ -450,10 +497,17 @@ export const events = [
     id: 'shared-1935-german-rearm',
     year: 1935, month: 3, title: 'Germany Rearms Openly',
     variants: {
-      germany: { description: 'Goering already runs a secret Luftwaffe. Generals ask: do we tell the world?', choices: [
-        { label: 'Announce conscription and the Luftwaffe', outcome: 'Crowds cheer; France mobilizes; Britain shrugs.', effects: { military: +18, stability: +8, aggression: +12 }, tension: +8, flags: ['rearm-openly'] },
-        { label: 'Keep rearming in secret', outcome: 'The buildup continues; foreign powers pretend not to know.', effects: { military: +10, aggression: +5 }, tension: +3, flags: ['rearm-secret'] },
-      ]},
+      germany: {
+        description: 'Goering already runs a secret Luftwaffe. Generals ask: do we tell the world?',
+        altDescriptions: [
+          { when: ['weimar-survives'], text: 'The Reichswehr asks for equality of arms with France. The Foreign Ministry warns that defiance of Versailles risks isolation; the General Staff warns that obedience to it risks invasion.' },
+        ],
+        choices: [
+          { label: 'Announce conscription and the Luftwaffe', outcome: 'Crowds cheer; France mobilizes; Britain shrugs.', effects: { military: +18, stability: +8, aggression: +12 }, tension: +8, flags: ['rearm-openly'], requires: ['hitler-chancellor'] },
+          { label: 'Keep rearming in secret', outcome: 'The buildup continues; foreign powers pretend not to know.', effects: { military: +10, aggression: +5 }, tension: +3, flags: ['rearm-secret'] },
+          { label: 'Negotiate arms parity through Geneva', outcome: 'A legal, gradual rearmament; Stresemann’s ghost smiles.', effects: { military: +6, diplomacy: +10, aggression: 0 }, tension: -3, flags: ['negotiated-rearm'], excludes: ['hitler-chancellor'] },
+        ],
+      },
       us: { description: 'Berlin announces an air force and a 550,000-man army.', choices: [
         { label: 'Sign the new Neutrality Act', outcome: 'Aggressor and victim treated as moral equals.', effects: { diplomacy: -5, aggression: -8 }, tension: +4, flags: ['neutrality-act', 'isolationist'] },
         { label: 'Veto it — keep the President’s hand free', outcome: 'Congress overrides you; the fight is on the record.', effects: { diplomacy: +5, stability: -5, aggression: +3 }, tension: -1, flags: ['interventionist'] },
@@ -519,6 +573,7 @@ export const events = [
     id: 'germany-1935-nuremberg',
     year: 1935, month: 9, title: 'The Nuremberg Laws',
     appliesTo: ['germany'],
+    requires: ['hitler-chancellor'],
     variants: {
       germany: {
         description: 'Hitler wants racial citizenship laws ready for the Party Rally.',
@@ -568,15 +623,31 @@ export const events = [
     id: 'shared-1936-rhineland',
     year: 1936, month: 3, title: 'The Rhineland Crisis',
     variants: {
-      germany: { description: 'Locarno’s demilitarized zone is the last Versailles fetter on German soil.', choices: [
-        { label: 'Remilitarize the Rhineland', outcome: 'Three battalions cross the bridges; France does not move.', effects: { military: +12, stability: +12, aggression: +15 }, tension: +10, flags: ['rhineland-remilitarized'] },
-        { label: 'Hold back — wait for the army to grow', outcome: 'Hitler is overruled; the moment passes.', effects: { military: +3, aggression: +3 }, tension: -2 },
-      ]},
-      france: { description: 'German battalions are crossing the Rhine. The Wehrmacht is weak; the British refuse to back you.', choices: [
-        { label: 'Order the army across the frontier', outcome: 'French divisions expel the Wehrmacht; Hitler is humiliated.', effects: { military: +8, diplomacy: -8, aggression: +15, stability: -8 }, tension: -8, flags: ['france-rhineland-strike', 'germany-humiliated'] },
-        { label: 'Wait for Britain', outcome: 'London declines; the Wehrmacht digs in.', effects: { military: -8, diplomacy: -8, aggression: -8 }, tension: +12, flags: ['rhineland-failed'] },
-        { label: 'Mobilize as a show of force', outcome: 'Half measures. The Germans see through it.', effects: { military: +3, diplomacy: -3 }, tension: +6 },
-      ]},
+      germany: {
+        description: 'Locarno’s demilitarized zone is the last Versailles fetter on German soil.',
+        altDescriptions: [
+          { when: ['weimar-survives'], text: 'Locarno’s demilitarized zone is the last Versailles fetter on German soil. The Reichstag debates whether the Republic should revise it openly, in concert with London, or live with it.' },
+        ],
+        choices: [
+          { label: 'Remilitarize the Rhineland', outcome: 'Three battalions cross the bridges; France does not move.', effects: { military: +12, stability: +12, aggression: +15 }, tension: +10, flags: ['rhineland-remilitarized'], requires: ['hitler-chancellor'] },
+          { label: 'Hold back — wait for the army to grow', outcome: 'Hitler is overruled; the moment passes.', effects: { military: +3, aggression: +3 }, tension: -2, requires: ['hitler-chancellor'] },
+          { label: 'Propose a negotiated Rhineland status', outcome: 'You ask London to mediate; Paris is suspicious but receptive.', effects: { diplomacy: +12, military: +3 }, tension: -3, flags: ['rhineland-negotiated'], excludes: ['hitler-chancellor'] },
+          { label: 'Live with the demilitarized zone', outcome: 'A Republic that honours its treaties.', effects: { diplomacy: +5, military: -3 }, tension: -2, excludes: ['hitler-chancellor'] },
+        ],
+      },
+      france: {
+        description: 'German battalions are crossing the Rhine. The Wehrmacht is weak; the British refuse to back you.',
+        altDescriptions: [
+          { when: ['rhineland-negotiated'], text: 'Berlin has proposed a negotiated revision of the Rhineland’s status. The Quai d’Orsay must answer: stand on Versailles, or accept the new offer?' },
+        ],
+        choices: [
+          { label: 'Order the army across the frontier', outcome: 'French divisions expel the Wehrmacht; Hitler is humiliated.', effects: { military: +8, diplomacy: -8, aggression: +15, stability: -8 }, tension: -8, flags: ['france-rhineland-strike', 'germany-humiliated'], excludes: ['rhineland-negotiated'] },
+          { label: 'Wait for Britain', outcome: 'London declines; the Wehrmacht digs in.', effects: { military: -8, diplomacy: -8, aggression: -8 }, tension: +12, flags: ['rhineland-failed'], excludes: ['rhineland-negotiated'] },
+          { label: 'Mobilize as a show of force', outcome: 'Half measures. The Germans see through it.', effects: { military: +3, diplomacy: -3 }, tension: +6, excludes: ['rhineland-negotiated'] },
+          { label: 'Accept the negotiated revision', outcome: 'A diplomatic settlement, formally guaranteed. Versailles is dead by paper, not by tanks.', effects: { diplomacy: +10, military: -3 }, tension: -4, requires: ['rhineland-negotiated'] },
+          { label: 'Refuse the German offer; insist on the status quo', outcome: 'France stands on Versailles; Berlin grumbles but accepts.', effects: { diplomacy: +5, military: +3 }, tension: -2, requires: ['rhineland-negotiated'] },
+        ],
+      },
       britain: { description: 'German troops are in the Rhineland. France presses for joint action.', choices: [
         { label: 'Stand with France — joint mobilization', outcome: 'Hitler backs down; the Cabinet splits.', effects: { military: +5, diplomacy: +8, aggression: +8 }, tension: -6, flags: ['britain-stands-firm'] },
         { label: 'Counsel France against action', outcome: 'Eden lectures Paris on restraint.', effects: { diplomacy: -5, aggression: -5 }, tension: +8, flags: ['british-appeasement-starts'] },
@@ -796,9 +867,27 @@ export const events = [
   },
 
   {
+    id: 'germany-1937-revision',
+    year: 1937, month: 6, title: 'The Treaty Revision Conference',
+    appliesTo: ['germany'],
+    requires: ['weimar-survives'],
+    variants: {
+      germany: {
+        description: 'A great-power conference at Lausanne offers serious revisions of Versailles in exchange for German commitments to peaceful resolution of frontier issues.',
+        choices: [
+          { label: 'Sign — full revision package', outcome: 'Reparations gone, arms parity, Saar confirmed. Germany is, once more, a normal state.', effects: { diplomacy: +18, economy: +10, stability: +8, military: +5 }, tension: -6, flags: ['lausanne-revision'] },
+          { label: 'Demand more — Anschluss recognition included', outcome: 'You overreach; the conference deadlocks.', effects: { diplomacy: -5, aggression: +5 }, tension: +3 },
+          { label: 'Walk out — the price is too high', outcome: 'A nationalist gesture; revisionist papers cheer, foreign offices file the message.', effects: { diplomacy: -10, stability: +3, aggression: +8 }, tension: +5, flags: ['nationalist-republic'] },
+        ],
+      },
+    },
+  },
+
+  {
     id: 'germany-1937-hossbach',
     year: 1937, month: 11, title: 'The Hossbach Conference',
     appliesTo: ['germany'],
+    requires: ['hitler-chancellor'],
     variants: {
       germany: {
         description: 'Hitler privately reveals a timetable for war with Czechoslovakia and Austria.',
@@ -832,15 +921,31 @@ export const events = [
     id: 'shared-1938-anschluss',
     year: 1938, month: 3, title: 'The Anschluss',
     variants: {
-      germany: { description: 'Schuschnigg has called a referendum on Austrian independence.', choices: [
-        { label: 'Send in the Wehrmacht', outcome: 'Vienna goes mad with joy and terror; Austria is yours.', effects: { military: +8, economy: +8, stability: +8, aggression: +12 }, tension: +8, flags: ['anschluss'] },
-        { label: 'Engineer an Austrian Nazi coup', outcome: 'Seyss-Inquart invites you in; the optics are gentler.', effects: { stability: +5, aggression: +8 }, tension: +5, flags: ['anschluss'] },
-        { label: 'Postpone — wait for a better moment', outcome: 'Schuschnigg’s referendum holds; your moment passes.', effects: { stability: -5, aggression: -3 }, tension: -2 },
-      ]},
-      italy: { description: 'Hitler asks your permission to absorb Austria — your border with him.', choices: [
-        { label: 'Acquiesce — the Axis is more important', outcome: 'Hitler weeps with gratitude; Italian prestige in central Europe is finished.', effects: { diplomacy: -3, aggression: +5 }, tension: +4, flags: ['italy-accepts-anschluss'] },
-        { label: 'Move to the Brenner, as in 1934', outcome: 'Hitler hesitates; the Axis is fatally wounded.', effects: { military: +5, diplomacy: +8, aggression: +5 }, tension: -3, flags: ['italy-blocks-anschluss'] },
-      ]},
+      germany: {
+        description: 'Schuschnigg has called a referendum on Austrian independence.',
+        altDescriptions: [
+          { when: ['weimar-survives'], text: 'Austrian Christian Socialists ask whether a customs union or even confederation with the Republic might be negotiated. Mussolini is wary but no longer rushes troops to the Brenner.' },
+        ],
+        choices: [
+          { label: 'Send in the Wehrmacht', outcome: 'Vienna goes mad with joy and terror; Austria is yours.', effects: { military: +8, economy: +8, stability: +8, aggression: +12 }, tension: +8, flags: ['anschluss'], requires: ['hitler-chancellor'] },
+          { label: 'Engineer an Austrian Nazi coup', outcome: 'Seyss-Inquart invites you in; the optics are gentler.', effects: { stability: +5, aggression: +8 }, tension: +5, flags: ['anschluss'], requires: ['hitler-chancellor'] },
+          { label: 'Postpone — wait for a better moment', outcome: 'Schuschnigg’s referendum holds; your moment passes.', effects: { stability: -5, aggression: -3 }, tension: -2, requires: ['hitler-chancellor'] },
+          { label: 'Negotiate a customs union with Vienna', outcome: 'A peaceful Mitteleuropa takes shape; the dictators sulk.', effects: { economy: +10, diplomacy: +8, stability: +5 }, tension: -3, flags: ['customs-union'], excludes: ['hitler-chancellor'] },
+          { label: 'Respect Austrian independence; offer mutual recognition', outcome: 'A Republic that honours its neighbors.', effects: { diplomacy: +12, aggression: -5 }, tension: -3, excludes: ['hitler-chancellor'] },
+        ],
+      },
+      italy: {
+        description: 'Hitler asks your permission to absorb Austria — your border with him.',
+        altDescriptions: [
+          { when: ['italy-with-west'], text: 'Hitler asks your permission to absorb Austria. The Stresa Front you helped build in 1935 still stands; Britain and France will follow your lead.' },
+          { when: ['italy-axis'], text: 'Hitler informs you of his intention to absorb Austria. The Axis bound you to this moment in 1936.' },
+        ],
+        choices: [
+          { label: 'Acquiesce — the Axis is more important', outcome: 'Hitler weeps with gratitude; Italian prestige in central Europe is finished.', effects: { diplomacy: -3, aggression: +5 }, tension: +4, flags: ['italy-accepts-anschluss'] },
+          { label: 'Move to the Brenner, as in 1934', outcome: 'Hitler hesitates; the Axis is fatally wounded.', effects: { military: +5, diplomacy: +8, aggression: +5 }, tension: -3, flags: ['italy-blocks-anschluss'], excludes: ['italy-axis'] },
+          { label: 'Coordinate an Anglo-French response from Rome', outcome: 'You convene London and Paris in Stresa-revived form. Hitler hesitates.', effects: { diplomacy: +12, military: +3, aggression: +5 }, tension: -5, flags: ['stresa-revived', 'italy-blocks-anschluss'], requires: ['italy-with-west'] },
+        ],
+      },
       france: { description: 'German troops are in Vienna. France has no Cabinet — Chautemps has just resigned.', choices: [
         { label: 'Mobilize anyway and demand British solidarity', outcome: 'A gesture from a France without a Premier.', effects: { military: +3, diplomacy: -3, aggression: +5 }, tension: +3 },
         { label: 'Accept the Anschluss; lodge a protest', outcome: 'The right is satisfied; Czechoslovakia is half-encircled.', effects: { diplomacy: -8, aggression: -5 }, tension: +6, flags: ['france-accepts-anschluss'] },
@@ -864,6 +969,7 @@ export const events = [
   {
     id: 'shared-1938-sudeten',
     year: 1938, month: 5, title: 'The Sudetenland Demands',
+    excludes: ['weimar-survives'],
     variants: {
       germany: { description: 'Henlein’s Sudeten Germans agitate for "autonomy." The Wehrmacht updates Case Green.', choices: [
         { label: 'Escalate openly — demand the Sudetenland', outcome: 'Europe knows war is being prepared.', effects: { military: +5, aggression: +10 }, tension: +6 },
@@ -895,6 +1001,7 @@ export const events = [
   {
     id: 'shared-1938-munich',
     year: 1938, month: 9, title: 'Munich',
+    excludes: ['weimar-survives'],
     variants: {
       germany: { description: 'Mussolini proposes a four-power conference. Take the Sudetenland with paper signatures, or by force?', choices: [
         { label: 'Accept Munich', outcome: 'A bloodless triumph; Czechoslovakia is dismembered with British signatures.', effects: { military: +8, stability: +12, aggression: +10 }, tension: +4, flags: ['munich', 'sudetenland-taken'] },
@@ -927,9 +1034,27 @@ export const events = [
   },
 
   {
+    id: 'germany-1938-mitteleuropa',
+    year: 1938, month: 6, title: 'Mitteleuropa',
+    appliesTo: ['germany'],
+    requires: ['weimar-survives'],
+    variants: {
+      germany: {
+        description: 'With Austria peacefully linked by customs union, central Europe gravitates toward Berlin economically. Prague, Warsaw, Budapest watch nervously.',
+        choices: [
+          { label: 'Build an open economic bloc with all neighbors', outcome: 'A genuine common market in central Europe; small states join voluntarily.', effects: { economy: +12, diplomacy: +10 }, tension: -3, flags: ['mitteleuropa-open'] },
+          { label: 'Use economic leverage to extract political concessions', outcome: 'Small states bend; old fears of German hegemony return.', effects: { economy: +8, diplomacy: -5, aggression: +8 }, tension: +3, flags: ['mitteleuropa-strong'] },
+          { label: 'Stay strictly bilateral; no bloc', outcome: 'A more modest German role in the region.', effects: { economy: +3, diplomacy: +3 }, tension: 0 },
+        ],
+      },
+    },
+  },
+
+  {
     id: 'germany-1938-kristallnacht',
     year: 1938, month: 11, title: 'Kristallnacht',
     appliesTo: ['germany'],
+    requires: ['hitler-chancellor'],
     variants: {
       germany: {
         description: 'A diplomat is shot in Paris by a Jewish refugee. Goebbels proposes a "spontaneous" pogrom.',
@@ -948,6 +1073,7 @@ export const events = [
   {
     id: 'shared-1939-prague',
     year: 1939, month: 3, title: 'Prague Falls',
+    excludes: ['weimar-survives'],
     variants: {
       germany: { description: 'Slovak separatists invite "protection." The Czechs are defenseless.', choices: [
         { label: 'Occupy Bohemia and Moravia', outcome: 'German tanks roll into Prague; the world finally understands.', effects: { military: +10, economy: +8, aggression: +12, diplomacy: -15 }, tension: +14, flags: ['prague-occupied'] },
@@ -986,20 +1112,43 @@ export const events = [
     id: 'shared-1939-pact',
     year: 1939, month: 8, title: 'The Pact',
     variants: {
-      ussr: { description: 'Ribbentrop offers eastern Poland, the Baltics, and Bessarabia in secret. Western talks drift.', choices: [
-        { label: 'Sign the Molotov-Ribbentrop Pact', outcome: 'Champagne in the Kremlin; the Wehrmacht crosses Poland next week.', effects: { military: +8, economy: +5, diplomacy: -8, aggression: +18 }, tension: +14, flags: ['molotov-ribbentrop'] },
-        { label: 'Sign the tripartite alliance with the West', outcome: 'A miracle of diplomacy; Hitler must face a two-front war.', effects: { diplomacy: +18, military: +5, aggression: +8 }, tension: +6, flags: ['grand-alliance-signed'] },
-        { label: 'Sign nothing — fortress USSR', outcome: 'You gamble that capitalists will exhaust each other.', effects: { military: +5, diplomacy: -12, aggression: +3 }, tension: +6, flags: ['soviet-neutral'] },
-      ]},
-      germany: { description: 'Ribbentrop is in Moscow. The Eastern Front is about to vanish.', choices: [
-        { label: 'Sign the pact and invade Poland', outcome: 'Britain and France declare war on September 3.', effects: { aggression: +20, diplomacy: -20 }, tension: +25, flags: ['invaded-poland', 'wwii'] },
-        { label: 'Pursue Danzig by diplomacy alone', outcome: 'Hitler rages but consents; the crisis is postponed.', effects: { aggression: +5, stability: -3 }, tension: +3, flags: ['no-poland-invasion'] },
-      ]},
-      britain: { description: 'Berlin and Moscow have signed. German troops are at the Polish border.', choices: [
-        { label: 'Declare war when Poland is invaded', outcome: 'September 3: Chamberlain on the wireless.', effects: { military: +3, diplomacy: +5, aggression: +18 }, tension: +20, flags: ['declared-war', 'wwii'] },
-        { label: 'Ultimatum with a window to back down', outcome: 'A two-day delay; war comes anyway.', effects: { aggression: +8 }, tension: +18, flags: ['delayed-war', 'wwii'] },
-        { label: 'Renege on the Polish guarantee', outcome: 'Cabinet collapses; the new government declares war anyway.', effects: { stability: -18, diplomacy: -12, aggression: -8 }, tension: +18, flags: ['cabinet-collapse', 'wwii'] },
-      ]},
+      ussr: {
+        description: 'Ribbentrop offers eastern Poland, the Baltics, and Bessarabia in secret. Western talks drift.',
+        altDescriptions: [
+          { when: ['ussr-collective-security', 'grand-alliance-tried'], text: 'Litvinov spent six years on collective security. The West finally sent a military mission to Moscow — even if it travelled by slow steamer. Ribbentrop, meanwhile, is on his way with a different offer.' },
+          { when: ['ussr-flirts-germany'], text: 'Berlin has been signaling for years. Ribbentrop arrives in Moscow with an offer the Western powers will not match.' },
+          { when: ['tukhachevsky-purge'], text: 'The Red Army, decapitated by your purges, is in no shape to fight Germany alone. Ribbentrop arrives with a tempting offer.' },
+        ],
+        choices: [
+          { label: 'Sign the Molotov-Ribbentrop Pact', outcome: 'Champagne in the Kremlin; the Wehrmacht crosses Poland next week.', effects: { military: +8, economy: +5, diplomacy: -8, aggression: +18 }, tension: +14, flags: ['molotov-ribbentrop'] },
+          { label: 'Sign the tripartite alliance with the West', outcome: 'A miracle of diplomacy; Hitler must face a two-front war.', effects: { diplomacy: +18, military: +5, aggression: +8 }, tension: +6, flags: ['grand-alliance-signed'], requires: ['ussr-collective-security'] },
+          { label: 'Sign nothing — fortress USSR', outcome: 'You gamble that capitalists will exhaust each other.', effects: { military: +5, diplomacy: -12, aggression: +3 }, tension: +6, flags: ['soviet-neutral'] },
+        ],
+      },
+      germany: {
+        description: 'Ribbentrop is in Moscow. The Eastern Front is about to vanish.',
+        altDescriptions: [
+          { when: ['weimar-survives'], text: 'The Polish question — Danzig and the Corridor — comes to a head. The Republic must decide how to revise the frontier without war.' },
+        ],
+        choices: [
+          { label: 'Sign the pact and invade Poland', outcome: 'Britain and France declare war on September 3.', effects: { aggression: +20, diplomacy: -20 }, tension: +25, flags: ['invaded-poland', 'wwii'], requires: ['hitler-chancellor'] },
+          { label: 'Pursue Danzig by diplomacy alone', outcome: 'Hitler rages but consents; the crisis is postponed.', effects: { aggression: +5, stability: -3 }, tension: +3, flags: ['no-poland-invasion'], requires: ['hitler-chancellor'] },
+          { label: 'Submit Danzig to League arbitration', outcome: 'A peaceful settlement; Versailles is amended by paper, not by tanks.', effects: { diplomacy: +15, military: -3, aggression: -3 }, tension: -8, flags: ['danzig-arbitration'], excludes: ['hitler-chancellor'] },
+          { label: 'Offer Poland a transit and customs deal', outcome: 'A negotiated, mutually beneficial arrangement.', effects: { economy: +5, diplomacy: +10 }, tension: -5, flags: ['poland-deal'], excludes: ['hitler-chancellor'] },
+        ],
+      },
+      britain: {
+        description: 'Berlin and Moscow have signed. German troops are at the Polish border.',
+        altDescriptions: [
+          { when: ['british-rearm-early'], text: 'Berlin and Moscow have signed. German troops mass on the Polish border. Six years of British rearmament put fighter command, the fleet, and an Expeditionary Force on a war footing.' },
+          { when: ['british-appeasement', 'chamberlain-peace'], text: 'Berlin and Moscow have signed. German troops are at the Polish border. The Munich illusion lies in ashes; the country expects a war it does not want.' },
+        ],
+        choices: [
+          { label: 'Declare war when Poland is invaded', outcome: 'September 3: Chamberlain on the wireless.', effects: { military: +3, diplomacy: +5, aggression: +18 }, tension: +20, flags: ['declared-war', 'wwii'] },
+          { label: 'Ultimatum with a window to back down', outcome: 'A two-day delay; war comes anyway.', effects: { aggression: +8 }, tension: +18, flags: ['delayed-war', 'wwii'] },
+          { label: 'Renege on the Polish guarantee', outcome: 'Cabinet collapses; the new government declares war anyway.', effects: { stability: -18, diplomacy: -12, aggression: -8 }, tension: +18, flags: ['cabinet-collapse', 'wwii'], excludes: ['british-stands-firm'] },
+        ],
+      },
       france: { description: 'Berlin and Moscow have signed. The Polish frontier is burning.', choices: [
         { label: 'Declare war alongside Britain', outcome: 'France enters her second war with Germany in a generation.', effects: { military: +3, diplomacy: +5, aggression: +18 }, tension: +20, flags: ['declared-war', 'wwii'] },
         { label: 'Sue for a new Munich for Poland', outcome: 'Bonnet tries; London refuses; you enter the war anyway.', effects: { diplomacy: -12, stability: -8 }, tension: +18, flags: ['poland-betrayal', 'wwii'] },

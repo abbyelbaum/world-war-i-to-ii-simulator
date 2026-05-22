@@ -410,7 +410,8 @@
 
 .event-progress {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.24em;
@@ -421,8 +422,45 @@
   border-bottom: 2px solid var(--nation-ink);
 }
 
-.event-counter {
+.event-date {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.event-progress-bar {
+  position: relative;
+  flex: 1 1 auto;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.08);
+  border: 2px solid var(--nation-ink);
+  overflow: hidden;
+}
+
+.event-progress-fill {
+  height: 100%;
+  background: var(--nation-primary);
+  transition: width 250ms ease;
+}
+
+.event-progress-anchor {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--nation-ink);
   opacity: 0.7;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.anchor-start {
+  left: 6px;
+}
+
+.anchor-end {
+  right: 6px;
 }
 
 .event-recap {
