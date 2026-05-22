@@ -1,0 +1,4 @@
+[build]
+  base = "between-wars-politics-simulator"
+  command = "npm run build"
+  publish = "dist"
