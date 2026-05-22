@@ -87,7 +87,7 @@ export const nations = {
       'It is January 1933. The Weimar Republic is dying. Six million are unemployed. Nazis and Communists battle in the streets. President Hindenburg, old and tired, must choose a new Chancellor — and the leader of the largest party in the Reichstag is a former Austrian corporal named Adolf Hitler. What kind of Germany will rise from this crisis?',
     colors: {
       primary: '#1c1c1c',
-      accent: '#b8860b',
+      accent: '#5a3a08',
       paper: '#e8dcc4',
       ink: '#0a0a0a',
     },
@@ -139,7 +139,7 @@ export const nations = {
       'It is 1933. The first Five-Year Plan has dragged a peasant nation into the industrial age at horrific cost — millions are starving in Ukraine. The Party is consolidated, rivals are silenced, and an entire generation of factories rises from the steppes. Beyond the borders, capitalism reels and fascism rises. The revolution must be defended.',
     colors: {
       primary: '#9b1a1a',
-      accent: '#f2cb31',
+      accent: '#7a4f0d',
       paper: '#ecdcb8',
       ink: '#3a0808',
     },
